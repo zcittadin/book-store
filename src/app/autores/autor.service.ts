@@ -35,6 +35,9 @@ export class AutorService {
 	public getAutores() : Autor[] {
 		return this.autores;
 	}
+	public getAutor(id: number) : Autor {
+		return this.autores.find(a => a.id === id);
+	}
 
 	public excluir(id: number) {
 		console.log(id);
