@@ -1,49 +1,48 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
-import { Autor } from './autor-model';
-import { Genero } from './genero-enum';
+import { Autor } from './autor.model';
 import { AutorService } from './autor.service';
 
+
 @Component({
-	selector: 'app-autores',
-	templateUrl: './autores.page.html',
-	styleUrls: ['./autores.page.scss'],
+  selector: 'app-autores',
+  templateUrl: './autores.page.html',
+  styleUrls: ['./autores.page.scss'],
 })
 export class AutoresPage implements OnInit {
+  autores: Autor[];
 
-	autores: Autor[];
+  constructor(
+    private alertController: AlertController,
+    private autorService: AutorService
+  ) {
+    this.listar();
+  }
 
-	constructor(
-		private alertController: AlertController,
-		private autorService: AutorService
-		) {
-		this.listar();
-	}
+  ngOnInit() {}
 
-	ngOnInit() {}
+  listar() {
+    this.autores = this.autorService.getAutores();
+  }
 
-	confirmarExclusao(autor: Autor) {
-		this.alertController.create({
-			header: 'Confirmação de exclusão',
-			message: `Deseja excluir o autor ${autor.nome}?`,
-			buttons: [
-			{
-				text: 'Sim',
-				handler: () => this.excluir(autor)
-			},
-			{
-				text: 'Não',
-			}
-			]
-		}).then(alerta => alerta.present());
-	}
+  confirmarExclusao(autor: Autor) {
+    this.alertController.create({
+      header: 'Confirmação de exclusão', 
+      message: `Deseja excluir o autor ${autor.nome}?`,
+      buttons: [
+        {
+          text: 'Sim',
+          handler: () => this.excluir(autor)
+        },
+        {
+          text: 'Não',
+        }
+      ]
+    }).then(alerta => alerta.present());
+  }
 
-	listar () {
-		this.autores = this.autorService.getAutores();
-	}
-
-	private excluir(a: Autor) {
-		this.autorService.excluir(a.id);
-		this.listar();
-	}
+  private excluir(autor: Autor) {
+    this.autorService.excluir(autor.id);
+    this.listar();
+  }
 }
