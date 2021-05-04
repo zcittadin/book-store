@@ -16,7 +16,7 @@ export class AutoresPage implements OnInit {
     private alertController: AlertController,
     private toastController: ToastController,
     private autorService: AutorService
-  ) { }
+    ) { }
 
   ionViewWillEnter() {
     console.log('ionViewWillEnter');
@@ -39,14 +39,14 @@ export class AutoresPage implements OnInit {
 
   listar() {
     this.autorService
-      .getAutores()
-      .subscribe(
-        (dados) => {
-          this.autores = dados;
-        }, 
-        (erro) => {
-          console.error(erro);
-        }
+    .getAutores()
+    .subscribe(
+      (dados) => {
+        this.autores = dados;
+      }, 
+      (erro) => {
+        console.error(erro);
+      }
       );
   }
 
@@ -55,31 +55,31 @@ export class AutoresPage implements OnInit {
       header: 'Confirmação de exclusão', 
       message: `Deseja excluir o autor ${autor.nome}?`,
       buttons: [
-        {
-          text: 'Sim',
-          handler: () => this.excluir(autor)
-        },
-        {
-          text: 'Não',
-        }
+      {
+        text: 'Sim',
+        handler: () => this.excluir(autor)
+      },
+      {
+        text: 'Não',
+      }
       ]
     }).then(alerta => alerta.present());
   }
 
   private excluir(autor: Autor) {
     this.autorService
-      .excluir(autor.id)
-      .subscribe(
-        () => this.listar(),
-        (erro) => {
-          console.error(erro);
-          this.toastController.create({
-            message: `Não foi possível excluir o autor ${autor.nome}`,
-            duration: 5000,
-            keyboardClose: true,
-            color: 'danger'
-          }).then(t => t.present());
-        }
+    .excluir(autor.id)
+    .subscribe(
+      () => this.listar(),
+      (erro) => {
+        console.error(erro);
+        this.toastController.create({
+          message: `Não foi possível excluir o autor ${autor.nome}`,
+          duration: 5000,
+          keyboardClose: true,
+          color: 'danger'
+        }).then(t => t.present());
+      }
       );
   }
 }

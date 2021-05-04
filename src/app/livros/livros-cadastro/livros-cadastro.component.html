@@ -1,0 +1,86 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Cadastro de livros</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+	<form [formGroup]="livrosForm">
+		<ion-item>
+            <ion-label position="floating">Titulo: </ion-label>
+            <ion-input formControlName="titulo" type="text">
+            </ion-input>
+            <ion-text color="danger" *ngIf="titulo.errors">
+                <small *ngIf="titulo.errors.required && (titulo.dirty || titulo.touched)">
+                    O campo titulo é obrigatório
+                </small>
+                <small *ngIf="titulo.errors.minlength && (titulo.dirty || titulo.touched)">
+                    O campo titulo deve conter no mínimo {{titulo.errors.minlength.requiredLength}} caracteres
+                </small>
+                <small *ngIf="titulo.errors.maxlength && (titulo.dirty || titulo.touched)">
+                    O campo titulo deve conter no máximo {{titulo.errors.maxlength.requiredLength}} caracteres
+                </small>
+            </ion-text>    
+        </ion-item>
+        <ion-item>
+      		<ion-label position="stacked">ISBN</ion-label>
+      		<ion-input inputmode="decimal" type="number" formControlName="isbn"></ion-input>
+      		<ion-text color="danger" *ngIf="isbn.errors">
+                <small *ngIf="isbn.errors.required && (isbn.dirty || isbn.touched)">
+                    O campo isbn é obrigatório
+                </small>
+            </ion-text>
+    	</ion-item>
+    	<ion-item>
+      		<ion-label position="stacked">Paginas</ion-label>
+      		<ion-input inputmode="decimal" type="number" formControlName="paginas"></ion-input>
+      		<ion-text color="danger" *ngIf="paginas.errors">
+                <small *ngIf="paginas.errors.required && (paginas.dirty || paginas.touched)">
+                    O campo paginas é obrigatório
+                </small>
+            </ion-text>
+    	</ion-item>
+    	<ion-item>
+            <ion-label position="floating">Autor: </ion-label>
+            <ion-input formControlName="autor" type="text">
+            </ion-input>
+            <ion-text color="danger" *ngIf="autor.errors">
+                <small *ngIf="autor.errors.required && (autor.dirty || autor.touched)">
+                    O campo autor é obrigatório
+                </small>
+                <small *ngIf="autor.errors.minlength && (autor.dirty || autor.touched)">
+                    O campo autor deve conter no mínimo {{autor.errors.minlength.requiredLength}} caracteres
+                </small>
+                <small *ngIf="autor.errors.maxlength && (autor.dirty || autor.touched)">
+                    O campo autor deve conter no máximo {{autor.errors.maxlength.requiredLength}} caracteres
+                </small>
+            </ion-text>    
+        </ion-item>
+        <ion-item>
+      		<ion-label position="stacked">Preço</ion-label>
+      		<ion-input inputmode="decimal" type="number" formControlName="preco"></ion-input>
+      		<ion-text color="danger" *ngIf="preco.errors">
+                <small *ngIf="preco.errors.required && (preco.dirty || preco.touched)">
+                    O campo preco é obrigatório
+                </small>
+            </ion-text>
+    	</ion-item>
+    	<ion-item>
+      		<ion-label position="stacked">Logo</ion-label>
+      		<ion-input type="text" formControlName="logo"></ion-input>
+      		<ion-text color="danger" *ngIf="logo.errors">
+                <small *ngIf="logo.errors.required && (logo.dirty || logo.touched)">
+                    O campo logo é obrigatório
+                </small>
+            </ion-text>
+    	</ion-item>
+    	<ion-fab vertical="bottom"
+                 horizontal="end">
+            <ion-fab-button (click)="salvar()" [disabled]="!livrosForm.valid">
+                <ion-icon name="checkmark-outline"></ion-icon>
+            </ion-fab-button>
+        </ion-fab>
+	</form>
+</ion-content>
