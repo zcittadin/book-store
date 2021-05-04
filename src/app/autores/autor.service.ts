@@ -1,67 +1,44 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Autor } from './autor.model';
-import { Genero } from './genero.enum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AutorService {
- 
-  private autores: Autor[];
-
-  constructor() { 
-    this.autores = [
-      {
-        id: 1,
-        nome: 'David Flanagan',
-        dataNascimento: new Date(1980, 11, 13),
-        genero: Genero.MASCULINO,
-      }, 
-      {
-        id: 2,
-        nome: 'Douglas Cockford',
-        dataNascimento: new Date(1975, 5, 17),
-        genero: Genero.MASCULINO,
-      },
-      {
-        id: 3,
-        nome: 'Martin Fowler',
-        dataNascimento: new Date(1960, 5, 17),
-        genero: Genero.MASCULINO
-      }
-    ];
-  }
   
-  getAutores() {
-    return this.autores;
+  private url = 'http://localhost:3000/autores';
+
+  constructor(
+    private httpClient: HttpClient
+  ) {}
+  
+  getAutores(): Observable<Autor[]> {
+    return this.httpClient.get<Autor[]>(this.url);
   }
 
-  excluir(id: number) {
-    this.autores = this.autores.filter(a => a.id !== id);
+  excluir(id: number): Observable<Object> {
+    return this.httpClient.delete(`${this.url}/${id}`);
   }
 
-  getAutor(id: number): Autor {
-    return this.autores.find(a => a.id === id);
+  getAutor(id: number): Observable<Autor> {
+    return this.httpClient.get<Autor>(`${this.url}/${id}`);
   }
 
   private adicionar(autor: Autor)  {
-    autor.id = parseInt((Math.random() * 1000).toFixed(0));
-    this.autores.push(autor);
+    return this.httpClient.post(this.url, autor);    
   }
 
   private atualizar(autor: Autor) {
-    this.autores.forEach((a, i) => {
-      if(a.id === autor.id) {
-        this.autores[i] = autor;
-      } 
-    })
+    return this.httpClient.put(`${this.url}/${autor.id}`, autor);
   }
 
   salvar(autor: Autor) {
     if(autor.id) {
-      this.atualizar(autor);
+      return this.atualizar(autor);
     } else {
-      this.adicionar(autor);
+      return this.adicionar(autor);
     }
   }
 }

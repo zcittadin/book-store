@@ -1,0 +1,28 @@
+{
+  "autores": [
+    {
+      "nome": "Judith Ashcroft",
+      "dataNascimento": "06/09/1953",
+      "genero": "F",
+      "id": 1
+    },
+    {
+      "nome": "Zander Cittadin",
+      "dataNascimento": "2008-12-04T17:46:00.268-02:00",
+      "genero": "M",
+      "id": 2
+    },
+    {
+      "nome": "Shirley McLane",
+      "dataNascimento": "29/12/1961",
+      "genero": "F",
+      "id": 3
+    },
+    {
+      "nome": "Alice Goldwin",
+      "dataNascimento": "17/13/1948",
+      "genero": "F",
+      "id": 4
+    }
+  ]
+}
