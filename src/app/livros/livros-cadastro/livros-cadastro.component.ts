@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { Livro } from '../livro.model';
 import { LivrosService } from '../livros.service';
+import { Autor } from '../../autores/autor.model';
+import { AutorService } from '../../autores/autor.service';
 
 @Component({
 	selector: 'app-livros-cadastro',
@@ -14,11 +16,13 @@ export class LivrosCadastroComponent implements OnInit {
 
 	livroId: number;
 	livrosForm: FormGroup;
+  autores: Autor[];
 
 	constructor(
 		private toastController: ToastController,
 		private activatedRoute: ActivatedRoute,
 		private livrosService: LivrosService,
+    private autorService: AutorService,
 		private router: Router,
 		) { 
 		let livro = {
@@ -33,6 +37,10 @@ export class LivrosCadastroComponent implements OnInit {
 		this.initializaFormulario(livro);
 	}
 
+  ionViewWillEnter() {
+    this.listarAutores();
+  }
+
 	ngOnInit() {
 		const id = this.activatedRoute.snapshot.paramMap.get('id');
 		if(id) {
@@ -45,12 +53,25 @@ export class LivrosCadastroComponent implements OnInit {
 		}
 	}
 
+  listarAutores() {
+    this.autorService
+    .getAutores()
+    .subscribe(
+      (dados) => {
+        this.autores = dados;
+      }, 
+      (erro) => {
+        console.error(erro);
+      }
+      );
+  }
+
 	initializaFormulario(livro: Livro) {
     this.livrosForm = new FormGroup({
       titulo: new FormControl(livro.titulo, [Validators.required, Validators.minLength(3), Validators.maxLength(150),]),
       isbn: new FormControl(livro.isbn, Validators.required),
       paginas: new FormControl(livro.paginas, Validators.required),
-      autor: new FormControl(livro.autor, [Validators.required, Validators.minLength(3), Validators.maxLength(150),]),
+      autor: new FormControl(livro.autor, Validators.required),
       preco: new FormControl(livro.preco, Validators.required),
       logo: new FormControl(livro.logo, Validators.required),
     })

@@ -43,27 +43,20 @@
             </ion-text>
     	</ion-item>
     	<ion-item>
-            <ion-label position="floating">Autor: </ion-label>
-            <ion-input formControlName="autor" type="text">
-            </ion-input>
-            <ion-text color="danger" *ngIf="autor.errors">
-                <small *ngIf="autor.errors.required && (autor.dirty || autor.touched)">
-                    O campo autor é obrigatório
-                </small>
-                <small *ngIf="autor.errors.minlength && (autor.dirty || autor.touched)">
-                    O campo autor deve conter no mínimo {{autor.errors.minlength.requiredLength}} caracteres
-                </small>
-                <small *ngIf="autor.errors.maxlength && (autor.dirty || autor.touched)">
-                    O campo autor deve conter no máximo {{autor.errors.maxlength.requiredLength}} caracteres
-                </small>
-            </ion-text>    
+            <ion-label position="stacked">Autor</ion-label>
+            <ion-select cancelText="Cancelar"
+                  okText="Selecionar"
+                  interface="alert"
+                  formControlName="autor">
+                    <ion-select-option *ngFor="let autor of autores">{{autor.nome}}</ion-select-option>
+            </ion-select>
         </ion-item>
         <ion-item>
       		<ion-label position="stacked">Preço</ion-label>
       		<ion-input inputmode="decimal" type="number" formControlName="preco"></ion-input>
       		<ion-text color="danger" *ngIf="preco.errors">
                 <small *ngIf="preco.errors.required && (preco.dirty || preco.touched)">
-                    O campo preco é obrigatório
+                    O campo preço é obrigatório
                 </small>
             </ion-text>
     	</ion-item>
